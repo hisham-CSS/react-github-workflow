@@ -5,7 +5,7 @@ export default function ARDemoPage() {
   useEffect(() => {
     // Redirect to standalone HTML page
     const basePath = appConfig.deployment.basePath || '';
-    window.location.href = `${basePath}ar-demo.html`;
+    window.location.href = `${basePath}/ar-demo.html`;
   }, []);
 
   return (
