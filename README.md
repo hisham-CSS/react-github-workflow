@@ -1,236 +1,214 @@
-# Cheat Sheet Template
+# React GitHub Workflow Template
 
-A configuration-driven, type-safe template for creating interactive documentation and cheat sheets. This template demonstrates itself - the content you see is a guide on how to use this template!
+![React GitHub Workflow](https://raw.githubusercontent.com/hisham-css/react-github-workflow/main/public/og-image.png)
+
+**A configuration-driven, type-safe template for creating interactive documentation, cheat sheets, and knowledge bases. Deploys to GitHub Pages with zero configuration.**
+
+This template is **self-documenting** - the live demo is a complete guide on how to use the template itself! See it live:
+
+**[Live Demo](https://hisham-css.github.io/react-github-workflow/)**
 
 ## ✨ Features
 
-- **Configuration-Driven**: All content in separate config files - no React knowledge needed
-- **Type-Safe**: Full TypeScript support with interfaces for validation
-- **Flexible Routing**: Environment-based deployment to GitHub Pages or custom domains
-- **Modern Stack**: React 19, TypeScript, Vite 7, Tailwind CSS 4
-- **Responsive Design**: Works perfectly on desktop, tablet, and mobile
-- **Easy Customization**: Change colors, content, and structure with simple config edits
+- **Configuration-Driven**: All content is in separate config files - no React knowledge needed to add content.
+- **Type-Safe**: Full TypeScript support with interfaces for validation and autocompletion.
+- **GitHub Pages Deployment**: Zero-config deployment with GitHub Actions.
+- **Modern Stack**: React 19, TypeScript, Vite 7, Tailwind CSS 4.
+- **Responsive Design**: Works perfectly on desktop, tablet, and mobile.
+- **Easy Customization**: Change colors, content, and structure with simple config edits.
+- **Live Demos**: Includes working examples for A-Frame (VR), AR.js (Augmented Reality), and 3D animations.
+- **Dark Mode**: Beautiful, modern dark mode UI.
 
 ## 🚀 Quick Start
 
-### 1. Clone and Install
+### 1. Use This Template
+
+Click the **"Use this template"** button on the GitHub repository page to create your own repository from this template.
+
+### 2. Clone Your Repository
 
 ```bash
-git clone https://github.com/yourusername/react-github-workflow.git
-cd react-github-workflow
+git clone https://github.com/your-username/your-repository-name.git
+cd your-repository-name
+```
+
+### 3. Install Dependencies
+
+```bash
 pnpm install
 ```
 
-### 2. Configure for Your Repository
+### 4. Configure for Your Repository
 
-Edit `.env.production`:
+Edit `.env.production` and set `VITE_BASE_PATH` to your repository name:
 
 ```env
+# .env.production
 VITE_BASE_PATH=/your-repository-name
 ```
 
-### 3. Customize Content
-
-Edit files in `client/src/config/`:
-
-- `app.config.ts` - Site title, subtitle, and settings
-- `content/hotkeys.config.ts` - Keyboard shortcuts or quick reference items
-- `content/workflow.config.ts` - Step-by-step workflows or processes
-- `content/scripting.config.ts` - Code examples and patterns
-
-### 4. Test Locally
+### 5. Run Development Server
 
 ```bash
-pnpm dev       # Start development server
-pnpm build     # Build for production
-pnpm preview   # Preview production build
+pnpm dev
 ```
 
-### 5. Deploy to GitHub Pages
+Open [http://localhost:3000](http://localhost:3000) to see your cheat sheet.
 
-```bash
-git add .
-git commit -m "Customize content"
-git push origin main
-```
+### 6. Deploy to GitHub Pages
 
-Enable GitHub Pages:
-1. Go to repository Settings → Pages
-2. Set source to **GitHub Actions**
-3. Wait for deployment to complete
+Push to your `main` branch to trigger the GitHub Actions workflow. Your site will be live at:
 
-Your site will be live at: `https://yourusername.github.io/your-repository-name/`
+`https://your-username.github.io/your-repository-name/`
 
-## 📁 Project Structure
+## 🔧 Configuration
 
-```
-client/src/
-├── config/                      # All configuration
-│   ├── app.config.ts           # Site settings
-│   ├── types.ts                # TypeScript interfaces
-│   └── content/                # Content by category
-│       ├── hotkeys.config.ts   # Quick reference items
-│       ├── workflow.config.ts  # Step-by-step guides
-│       └── scripting.config.ts # Code examples
-├── pages/
-│   └── Home.tsx                # Main page (data-driven)
-└── components/
-    └── ui/                     # UI components (shadcn/ui)
-```
+All configuration is done in the `client/src/config/` directory.
 
-## 🎨 Customization Examples
+### Site Configuration
 
-### Change Site Title
-
-Edit `client/src/config/app.config.ts`:
+Edit `client/src/config/app.config.ts` to change site-wide settings:
 
 ```typescript
-export const appConfig: AppConfig = {
+// client/src/config/app.config.ts
+export const appConfig = {
   site: {
-    title: "My Awesome Cheat Sheet",
-    subtitle: "Quick Reference Guide",
+    title: "Your Cheat Sheet Title",
+    subtitle: "Your subtitle here",
+    description: "Your site description",
     year: 2025,
   },
   // ...
 };
 ```
 
-### Add a Category
+### Content Customization
+
+All content is managed in the `client/src/config/content/` directory. Each file corresponds to a tab on the page.
+
+#### Quick Reference Tab
 
 Edit `client/src/config/content/hotkeys.config.ts`:
 
 ```typescript
-{
-  title: "My Category",
-  icon: "🎯",
-  shortcuts: [
-    { key: "Item 1", action: "Description of item 1" },
-    { key: "Item 2", action: "Description of item 2" },
+// client/src/config/content/hotkeys.config.ts
+export const hotkeysConfig: HotkeyConfig = {
+  title: "Quick Reference",
+  sections: [
+    {
+      title: "Essential Files",
+      hotkeys: [
+        { key: "package.json", label: "Project dependencies and scripts" },
+        // ...
+      ],
+    },
   ],
-}
+};
 ```
 
-### Add a Workflow
+#### Workflow Tab
 
 Edit `client/src/config/content/workflow.config.ts`:
 
 ```typescript
-{
-  title: "My Process",
-  description: "How to do something",
-  items: [
-    { name: "Step 1", desc: "First step" },
-    { name: "Step 2", desc: "Second step" },
+// client/src/config/content/workflow.config.ts
+export const workflowConfig: WorkflowConfig = {
+  title: "Workflows",
+  workflows: [
+    {
+      title: "Deploy to GitHub Pages",
+      steps: [
+        { title: "Create Repository", description: "Use this template..." },
+        // ...
+      ],
+    },
   ],
-}
+};
 ```
 
-### Add Code Examples
+#### Template API Tab
 
 Edit `client/src/config/content/scripting.config.ts`:
 
 ```typescript
-{
-  category: "Examples",
-  title: "My Code Pattern",
-  description: "What this demonstrates",
-  language: "typescript",
-  code: `
-function example() {
-  console.log("Hello World");
-}
-`,
-}
+// client/src/config/content/scripting.config.ts
+export const scriptingConfig: ScriptingConfig = {
+  title: "Template API",
+  sections: [
+    {
+      category: "Core Configuration",
+      examples: [
+        {
+          title: "app.config.ts - Site Settings",
+          description: "Change site title, subtitle, and description.",
+          code: `// client/src/config/app.config.ts\nexport const appConfig = { ... };`,
+        },
+        // ...
+      ],
+    },
+  ],
+};
 ```
 
-### Customize Colors
+## 🎨 Styling
 
-Edit `client/src/index.css`:
+### Colors
+
+Colors are managed in `client/src/index.css` using the **OKLCH color space** for modern, consistent colors.
 
 ```css
-.dark {
-  --primary: oklch(0.6 0.2 240);      /* Your primary color */
-  --accent: oklch(0.55 0.18 160);     /* Your accent color */
-  --background: oklch(0.15 0.02 250); /* Background color */
+/* client/src/index.css */
+:root {
+  --background: oklch(0.17 0.02 240);
+  --foreground: oklch(0.98 0.01 240);
+  --card: oklch(0.22 0.02 240);
+  /* ... */
 }
 ```
 
-## 🛠️ Available Commands
+### Fonts
 
-```bash
-pnpm dev       # Start development server
-pnpm build     # Build for production
-pnpm preview   # Preview production build
-pnpm check     # TypeScript type checking
-pnpm format    # Format code with Prettier
+The template uses [Inter](https://rsms.me/inter/) from Google Fonts. You can change this in `client/index.html`.
+
+## 🚀 Deployment
+
+### GitHub Pages
+
+Deployment is handled automatically by the `.github/workflows/deploy.yml` workflow. Simply push to your `main` branch.
+
+### Other Platforms
+
+To deploy to other platforms like Netlify or Vercel, you may need to adjust the `basePath` in `vite.config.ts` and your environment variables.
+
+## 📁 Project Structure
+
 ```
-
-## 📚 Documentation
-
-- **README_GITHUB_PAGES.md** - Detailed GitHub Pages setup
-- **TEMPLATE_DOCUMENTATION.md** - Complete architecture guide
-- **QUICK_START.md** - 5-minute getting started guide
-- **MIGRATION_GUIDE.md** - Migrating from other versions
-
-## 🎯 Use Cases
-
-This template is perfect for:
-
-- **Technical Documentation**: API references, command cheat sheets
-- **Learning Resources**: Tutorial guides, quick reference cards
-- **Team Knowledge**: Internal documentation, onboarding guides
-- **Personal Projects**: Study notes, code snippets collections
-
-## 🔧 Tech Stack
-
-- **React 19** - UI framework
-- **TypeScript** - Type safety
-- **Vite 7** - Build tool
-- **Tailwind CSS 4** - Styling
-- **shadcn/ui** - Component library
-- **Wouter** - Lightweight routing
-
-## ⚠️ Important Notes
-
-### Repository Name
-
-Make sure `.env.production` matches your GitHub repository name exactly:
-
-- ✅ Correct: `VITE_BASE_PATH=/react-github-workflow`
-- ❌ Wrong: `VITE_BASE_PATH=react-github-workflow` (missing slash)
-- ❌ Wrong: `VITE_BASE_PATH=/react-github-workflow/` (trailing slash)
-
-### After Changing .env
-
-Always rebuild after changing environment files:
-
-```bash
-pnpm build
+react-github-workflow/
+├── .github/              # GitHub Actions workflows
+├── client/
+│   ├── public/           # Static assets (favicon, ar-demo.html)
+│   ├── src/
+│   │   ├── components/     # Reusable React components
+│   │   ├── config/         # All configuration files
+│   │   │   ├── content/    # Content for each tab
+│   │   │   ├── app.config.ts
+│   │   │   └── types.ts
+│   │   ├── pages/          # Page components
+│   │   ├── App.tsx         # Main app component with routing
+│   │   ├── index.css       # Global styles
+│   │   └── main.tsx        # React entry point
+│   ├── index.html        # Main HTML file
+│   └── ...
+├── .env.development      # Development environment variables
+├── .env.production       # Production environment variables
+├── package.json          # Project dependencies
+└── vite.config.ts        # Vite configuration
 ```
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please open an issue or submit a pull request.
 
 ## 📄 License
 
-MIT License - Feel free to use this template for any project.
-
-## 🙏 Credits
-
-Built with modern web technologies and best practices. Template architecture designed for ease of use and maintainability.
-
----
-
-**Template Version**: 2.0.0  
-**Last Updated**: November 2025
-
-## 💡 Tips
-
-- Use the live site as a reference while customizing
-- Check TypeScript errors with `pnpm check` before deploying
-- Test locally with `pnpm dev` before pushing
-- Keep content organized in logical categories
-- Follow the existing type interfaces for new content
-
-**Need help?** Check the documentation files or open an issue!
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
