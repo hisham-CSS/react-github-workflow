@@ -2,10 +2,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Code2, BookOpen, Workflow, Sparkles } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Code2, BookOpen, Workflow, Sparkles, Box } from "lucide-react";
 import { appConfig } from "@/config/app.config";
 import { hotkeyCategories, workflows, scriptingPatterns } from "@/config/content";
 import type { HotkeyCategory, Workflow as WorkflowType, ScriptingPattern } from "@/config/types";
+import { AFrameDemo, ARDemo, ThreeDemo } from "@/components/demos";
 
 export default function Home() {
   return (
@@ -26,7 +28,7 @@ export default function Home() {
 
       <main className="container py-8">
         <Tabs defaultValue="hotkeys" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8">
+          <TabsList className="grid w-full grid-cols-4 mb-8">
             <TabsTrigger value="hotkeys" className="flex items-center gap-2">
               <BookOpen className="w-4 h-4" />
               Quick Reference
@@ -38,6 +40,10 @@ export default function Home() {
             <TabsTrigger value="scripting" className="flex items-center gap-2">
               <Code2 className="w-4 h-4" />
               Template API
+            </TabsTrigger>
+            <TabsTrigger value="demos" className="flex items-center gap-2">
+              <Box className="w-4 h-4" />
+              Live Demos
             </TabsTrigger>
           </TabsList>
 
@@ -51,6 +57,10 @@ export default function Home() {
 
           <TabsContent value="scripting" className="space-y-6">
             <ScriptingSection patterns={scriptingPatterns} />
+          </TabsContent>
+
+          <TabsContent value="demos" className="space-y-8">
+            <DemosSection />
           </TabsContent>
         </Tabs>
       </main>
@@ -119,21 +129,98 @@ function WorkflowSection({ workflows }: { workflows: WorkflowType[] }) {
 }
 
 function ScriptingSection({ patterns }: { patterns: ScriptingPattern[] }) {
+  // Group patterns by category
+  const groupedPatterns = patterns.reduce((acc, pattern) => {
+    if (!acc[pattern.category]) {
+      acc[pattern.category] = [];
+    }
+    acc[pattern.category].push(pattern);
+    return acc;
+  }, {} as Record<string, ScriptingPattern[]>);
+
   return (
-    <div className="space-y-6">
-      {patterns.map((pattern) => (
-        <Card key={pattern.title} className="bg-card border-border">
-          <CardHeader>
-            <CardTitle className="text-xl">{pattern.title}</CardTitle>
-            <CardDescription>{pattern.description}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-              <code>{pattern.code}</code>
-            </pre>
-          </CardContent>
-        </Card>
+    <Accordion type="multiple" className="space-y-4">
+      {Object.entries(groupedPatterns).map(([category, categoryPatterns]) => (
+        <AccordionItem key={category} value={category} className="border border-border rounded-lg !border-b">
+          <AccordionTrigger className="px-6 py-4 hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Badge variant="outline" className="text-xs">
+                {categoryPatterns.length}
+              </Badge>
+              <span className="text-lg font-semibold">{category}</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            <div className="space-y-6">
+              {categoryPatterns.map((pattern) => (
+                <Card key={pattern.title} className="bg-card/50 border-border">
+                  <CardHeader>
+                    <CardTitle className="text-base">{pattern.title}</CardTitle>
+                    <CardDescription className="text-sm">{pattern.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs">
+                      <code>{pattern.code}</code>
+                    </pre>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
       ))}
+    </Accordion>
+  );
+}
+
+
+function DemosSection() {
+  return (
+    <div className="space-y-8">
+      <Card className="bg-card border-border">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Box className="w-5 h-5" />
+            A-Frame VR Scene
+          </CardTitle>
+          <CardDescription>
+            Interactive 3D/VR scene with animated objects. Works in VR headsets and browsers.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <AFrameDemo />
+        </CardContent>
+      </Card>
+
+      <Card className="bg-card border-border">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Box className="w-5 h-5" />
+            AR.js Augmented Reality
+          </CardTitle>
+          <CardDescription>
+            Marker-based AR experience using your device camera
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ARDemo />
+        </CardContent>
+      </Card>
+
+      <Card className="bg-card border-border">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Box className="w-5 h-5" />
+            3D Animation Demo
+          </CardTitle>
+          <CardDescription>
+            Animated 3D graphics (lightweight canvas-based demo)
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ThreeDemo />
+        </CardContent>
+      </Card>
     </div>
   );
 }
