@@ -5,6 +5,9 @@ import { Router as WouterRouter, Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import AFrameDemoPage from "./pages/demos/AFrameDemoPage";
+import ARDemoPage from "./pages/demos/ARDemoPage";
+import ThreeDemoPage from "./pages/demos/ThreeDemoPage";
 import { appConfig } from "@/config/app.config";
 
 function Router() {
@@ -12,6 +15,9 @@ function Router() {
     <WouterRouter base={appConfig.deployment.basePath}>
       <Switch>
         <Route path={"/"} component={Home} />
+        <Route path={"/demos/aframe"} component={AFrameDemoPage} />
+        <Route path={"/demos/ar"} component={ARDemoPage} />
+        <Route path={"/demos/3d"} component={ThreeDemoPage} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

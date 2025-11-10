@@ -3,11 +3,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Code2, BookOpen, Workflow, Sparkles, Box } from "lucide-react";
+import { Code2, BookOpen, Workflow, Sparkles, Box, ExternalLink } from "lucide-react";
 import { appConfig } from "@/config/app.config";
 import { hotkeyCategories, workflows, scriptingPatterns } from "@/config/content";
 import type { HotkeyCategory, Workflow as WorkflowType, ScriptingPattern } from "@/config/types";
-import { AFrameDemo, ARDemo, ThreeDemo } from "@/components/demos";
+import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 
 export default function Home() {
   return (
@@ -29,21 +30,25 @@ export default function Home() {
       <main className="container py-8">
         <Tabs defaultValue="hotkeys" className="w-full">
           <TabsList className="grid w-full grid-cols-4 mb-8">
-            <TabsTrigger value="hotkeys" className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4" />
-              Quick Reference
+            <TabsTrigger value="hotkeys" className="flex items-center gap-1 sm:gap-2">
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">Quick Reference</span>
+              <span className="sm:hidden text-xs">Quick</span>
             </TabsTrigger>
-            <TabsTrigger value="workflow" className="flex items-center gap-2">
-              <Workflow className="w-4 h-4" />
-              Workflow
+            <TabsTrigger value="workflow" className="flex items-center gap-1 sm:gap-2">
+              <Workflow className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">Workflow</span>
+              <span className="sm:hidden text-xs">Flow</span>
             </TabsTrigger>
-            <TabsTrigger value="scripting" className="flex items-center gap-2">
-              <Code2 className="w-4 h-4" />
-              Template API
+            <TabsTrigger value="scripting" className="flex items-center gap-1 sm:gap-2">
+              <Code2 className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">Template API</span>
+              <span className="sm:hidden text-xs">API</span>
             </TabsTrigger>
-            <TabsTrigger value="demos" className="flex items-center gap-2">
-              <Box className="w-4 h-4" />
-              Live Demos
+            <TabsTrigger value="demos" className="flex items-center gap-1 sm:gap-2">
+              <Box className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">Live Demos</span>
+              <span className="sm:hidden text-xs">Demos</span>
             </TabsTrigger>
           </TabsList>
 
@@ -176,51 +181,74 @@ function ScriptingSection({ patterns }: { patterns: ScriptingPattern[] }) {
 
 function DemosSection() {
   return (
-    <div className="space-y-8">
-      <Card className="bg-card border-border">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Box className="w-5 h-5" />
-            A-Frame VR Scene
-          </CardTitle>
-          <CardDescription>
-            Interactive 3D/VR scene with animated objects. Works in VR headsets and browsers.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <AFrameDemo />
-        </CardContent>
-      </Card>
+    <div className="space-y-6">
+      <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 mb-6">
+        <p className="text-sm text-blue-600 dark:text-blue-400">
+          <strong>Note:</strong> Demos open in separate pages for best performance and to avoid conflicts with A-Frame/AR.js.
+        </p>
+      </div>
 
-      <Card className="bg-card border-border">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Box className="w-5 h-5" />
-            AR.js Augmented Reality
-          </CardTitle>
-          <CardDescription>
-            Marker-based AR experience using your device camera
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ARDemo />
-        </CardContent>
-      </Card>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Card className="bg-card border-border">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Box className="w-5 h-5" />
+              A-Frame VR Scene
+            </CardTitle>
+            <CardDescription className="text-sm">
+              Interactive 3D/VR scene with animated objects. Works in VR headsets and browsers.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/demos/aframe">
+              <Button className="w-full gap-2">
+                Launch Demo
+                <ExternalLink className="w-4 h-4" />
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
 
-      <Card className="bg-card border-border">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Box className="w-5 h-5" />
-            3D Animation Demo
-          </CardTitle>
-          <CardDescription>
-            Animated 3D graphics (lightweight canvas-based demo)
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ThreeDemo />
-        </CardContent>
-      </Card>
+        <Card className="bg-card border-border">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Box className="w-5 h-5" />
+              AR.js Augmented Reality
+            </CardTitle>
+            <CardDescription className="text-sm">
+              Marker-based AR experience using your device camera. Best on mobile.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/demos/ar">
+              <Button className="w-full gap-2">
+                Launch Demo
+                <ExternalLink className="w-4 h-4" />
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card border-border">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Box className="w-5 h-5" />
+              3D Canvas Animation
+            </CardTitle>
+            <CardDescription className="text-sm">
+              Animated 3D graphics using pure canvas - no Three.js needed!
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/demos/3d">
+              <Button className="w-full gap-2">
+                Launch Demo
+                <ExternalLink className="w-4 h-4" />
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
