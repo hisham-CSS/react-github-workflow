@@ -5,20 +5,44 @@ import { Button } from '@/components/ui/button';
 
 export default function AFrameDemoPage() {
   useEffect(() => {
+    // Save original viewport
+    const originalViewport = document.querySelector('meta[name="viewport"]');
+    const originalContent = originalViewport?.getAttribute('content') || '';
+
+    // Set viewport for A-Frame (prevent zoom but allow user scaling)
+    if (originalViewport) {
+      originalViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=yes');
+    }
+
     // Load A-Frame script
     const script = document.createElement('script');
     script.src = 'https://aframe.io/releases/1.4.2/aframe.min.js';
     script.async = true;
     document.head.appendChild(script);
 
+    // Cleanup function
     return () => {
-      // Cleanup
+      // Remove A-Frame script
       script.remove();
+      
+      // Restore original viewport
+      if (originalViewport && originalContent) {
+        originalViewport.setAttribute('content', originalContent);
+      }
+
+      // Remove any A-Frame injected elements
+      const aframeStyles = document.querySelectorAll('style[data-aframe]');
+      aframeStyles.forEach(style => style.remove());
+      
+      // Force viewport reset
+      if (originalViewport) {
+        originalViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
+      }
     };
   }, []);
 
   const aframeHTML = `
-    <a-scene>
+    <a-scene embedded style="width: 100%; height: 100vh;">
       <a-sky color="#ECECEC"></a-sky>
       
       <a-box 

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AR.js Demo</title>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    #back-button {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 99999;
+      background: rgba(255, 255, 255, 0.95);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1a1a;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    #back-button:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    #back-button:active {
+      transform: translateY(0);
+    }
+
+    #instructions {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 99999;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      border-radius: 8px;
+      padding: 12px;
+      max-width: 200px;
+      font-size: 11px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    #instructions h3 {
+      margin: 0 0 8px 0;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    #instructions ol {
+      margin: 0;
+      padding-left: 16px;
+    }
+
+    #instructions li {
+      margin: 4px 0;
+      line-height: 1.4;
+    }
+
+    #instructions a {
+      color: #60a5fa;
+      text-decoration: underline;
+    }
+
+    .a-canvas {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+</head>
+<body>
+  <button id="back-button" onclick="goBack()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back
+  </button>
+
+  <div id="instructions">
+    <h3>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+        <circle cx="12" cy="13" r="4"/>
+      </svg>
+      AR Instructions
+    </h3>
+    <ol>
+      <li>Allow camera access</li>
+      <li>Print <a href="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png" target="_blank">Hiro marker</a></li>
+      <li>Point camera at marker</li>
+    </ol>
+  </div>
+
+  <a-scene
+    embedded
+    arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+    vr-mode-ui="enabled: false"
+    renderer="logarithmicDepthBuffer: true; precision: medium;">
+    
+    <a-marker preset="hiro">
+      <a-box 
+        position="0 0.5 0" 
+        material="color: #FF0000; opacity: 0.9;"
+        animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear">
+      </a-box>
+      <a-text 
+        value="Hello AR!" 
+        position="0 1.5 0" 
+        align="center" 
+        color="#FFFFFF"
+        scale="2 2 2">
+      </a-text>
+    </a-marker>
+    
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <script>
+    function goBack() {
+      // Stop all video streams before navigating
+      const videos = document.querySelectorAll('video');
+      videos.forEach(video => {
+        if (video.srcObject) {
+          const stream = video.srcObject;
+          stream.getTracks().forEach(track => track.stop());
+          video.srcObject = null;
+        }
+      });
+
+      // Get the base path from the current URL
+      const path = window.location.pathname;
+      const basePath = path.substring(0, path.lastIndexOf('/'));
+      
+      // Navigate back to home
+      window.location.href = basePath + '/';
+    }
+
+    // Stop camera when page is being unloaded
+    window.addEventListener('beforeunload', () => {
+      const videos = document.querySelectorAll('video');
+      videos.forEach(video => {
+        if (video.srcObject) {
+          const stream = video.srcObject;
+          stream.getTracks().forEach(track => track.stop());
+        }
+      });
+    });
+  </script>
+</body>
+</html>

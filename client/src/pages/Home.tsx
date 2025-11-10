@@ -220,12 +220,12 @@ function DemosSection() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Link href="/demos/ar">
+            <a href={`${window.location.origin}${appConfig.deployment.basePath}ar-demo.html`} target="_blank" rel="noopener noreferrer">
               <Button className="w-full gap-2">
                 Launch Demo
                 <ExternalLink className="w-4 h-4" />
               </Button>
-            </Link>
+            </a>
           </CardContent>
         </Card>
 
