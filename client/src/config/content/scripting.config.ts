@@ -1,20 +1,23 @@
 import type { ScriptingPattern } from "../types";
 
 export const scriptingPatterns: ScriptingPattern[] = [
-  // Core Configuration
+  // ============================================================================
+  // CONFIGURATION API
+  // ============================================================================
+  
   {
-    category: "Core Configuration",
-    title: "client/src/config/app.config.ts",
-    description: "Main site configuration - change title, subtitle, and description here",
+    category: "Configuration API",
+    title: "The AppConfig Object",
+    description: "Main site configuration - customize title, subtitle, description, and features. File: client/src/config/app.config.ts",
     language: "typescript",
     code: `
 import type { AppConfig } from "./types";
 
 export const appConfig: AppConfig = {
   site: {
-    title: "React GitHub Workflow",        // Change this
-    subtitle: "Deploy React Apps to GitHub Pages",  // Change this
-    description: "Your description here",  // Change this
+    title: "My Awesome Project",
+    subtitle: "A new documentation site",
+    description: "Your one-stop shop for awesome documentation.",
     year: 2025,
   },
   deployment: {
@@ -32,224 +35,292 @@ export const appConfig: AppConfig = {
 };
 `,
   },
+  
   {
-    category: "Core Configuration",
-    title: "client/src/config/content/hotkeys.config.ts",
-    description: "Edit this file to change the Quick Reference tab content",
+    category: "Configuration API",
+    title: "Environment Variables",
+    description: "Set your repository name for GitHub Pages deployment. File: .env.production",
+    language: "bash",
+    code: `
+# Production Environment Configuration for GitHub Pages
+# MUST match your GitHub repository name exactly
+
+VITE_BASE_PATH=/my-awesome-project
+
+# Example: If your repo is github.com/username/my-app
+# Then set: VITE_BASE_PATH=/my-app
+`,
+  },
+
+  {
+    category: "Configuration API",
+    title: "TypeScript Types",
+    description: "Extend the configuration types for custom fields. File: client/src/config/types.ts",
+    language: "typescript",
+    code: `
+// Add a new property to the Hotkey interface
+export interface Hotkey {
+  key: string;
+  action: string;
+  category?: string;  // Your new property
+}
+
+// Or create a completely new interface
+export interface CustomSection {
+  title: string;
+  items: CustomItem[];
+}
+
+export interface CustomItem {
+  name: string;
+  value: string;
+}
+`,
+  },
+
+  // ============================================================================
+  // CONTENT API
+  // ============================================================================
+  
+  {
+    category: "Content API",
+    title: "The HotkeyCategory Object",
+    description: "Add sections to the Quick Reference tab. File: client/src/config/content/hotkeys.config.ts",
     language: "typescript",
     code: `
 import type { HotkeyCategory } from "../types";
 
 export const hotkeyCategories: HotkeyCategory[] = [
   {
-    title: "Your Category Name",
-    icon: "📄",  // Any emoji
+    title: "My Favorite Tools",
+    icon: "🛠️",
     shortcuts: [
-      { key: "Item name", action: "Item description" },
-      { key: "Another item", action: "Another description" },
-      // Add more items...
+      { key: "VS Code", action: "My favorite code editor" },
+      { key: "Figma", action: "For all my design needs" },
+      { key: "GitHub", action: "Version control and collaboration" },
     ],
   },
-  // Add more categories...
+  // ... add more categories
 ];
 `,
   },
+
   {
-    category: "Core Configuration",
-    title: "client/src/config/content/workflow.config.ts",
-    description: "Edit this file to change the Workflow tab content",
+    category: "Content API",
+    title: "The Workflow Object",
+    description: "Add step-by-step guides to the Workflow tab. File: client/src/config/content/workflow.config.ts",
     language: "typescript",
     code: `
 import type { Workflow } from "../types";
 
 export const workflows: Workflow[] = [
   {
-    title: "Your Workflow Title",
-    description: "Description of what this workflow does",
+    title: "My Content Creation Workflow",
+    description: "How I create and publish new content.",
     items: [
-      { name: "Step 1", desc: "First step description" },
-      { name: "Step 2", desc: "Second step description" },
-      { name: "Step 3", desc: "Third step description" },
-      // Add more steps...
+      { name: "1. Brainstorm Ideas", desc: "Come up with a list of topics." },
+      { name: "2. Write Draft", desc: "Write the first draft in Markdown." },
+      { name: "3. Review and Edit", desc: "Proofread and make improvements." },
+      { name: "4. Publish", desc: "Push to GitHub to deploy." },
     ],
   },
-  // Add more workflows...
+  // ... add more workflows
 ];
 `,
   },
+
   {
-    category: "Core Configuration",
-    title: "client/src/config/content/scripting.config.ts",
-    description: "Edit this file to change the Template API tab content (this tab!)",
+    category: "Content API",
+    title: "The ScriptingPattern Object",
+    description: "Add code examples to the Template API tab (this tab!). File: client/src/config/content/scripting.config.ts",
     language: "typescript",
     code: `
 import type { ScriptingPattern } from "../types";
 
 export const scriptingPatterns: ScriptingPattern[] = [
   {
-    category: "Your Category",
-    title: "Example Title",
-    description: "What this code example shows",
-    language: "typescript",  // or "javascript", "bash", "yaml", etc.
+    category: "My Custom Category",
+    title: "Example: Custom Function",
+    description: "A useful utility function for your project.",
+    language: "typescript",
     code: \\\`
-// Your code example here
-function example() {
-  console.log("Hello World");
+export function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 }
 \\\`,
   },
-  // Add more code examples...
+  // ... add more examples
 ];
 `,
   },
+
+  // ============================================================================
+  // STYLING API
+  // ============================================================================
+  
   {
-    category: "Core Configuration",
-    title: ".env.production",
-    description: "Set your repository name here - MUST match GitHub repo name exactly",
-    language: "bash",
-    code: `
-# Production Environment Configuration for GitHub Pages
-# Set this to your GitHub repository name
-VITE_BASE_PATH=/your-repository-name
-
-# Example: If your repo is github.com/username/my-app
-# Then set: VITE_BASE_PATH=/my-app
-`,
-  },
-  {
-    category: "Core Configuration",
-    title: "vite.config.ts",
-    description: "Vite configuration - reads base path from environment (usually don't need to change)",
-    language: "typescript",
-    code: `
-import { defineConfig, loadEnv } from "vite";
-import react from "@vitejs/plugin-react";
-import path from "path";
-
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), "");
-
-  return {
-    plugins: [react()],
-    base: env.VITE_BASE_PATH || "/",  // Reads from .env.production
-    resolve: {
-      alias: {
-        "@": path.resolve(__dirname, "./client/src"),
-      },
-    },
-    build: {
-      outDir: "dist/public",
-    },
-  };
-});
-`,
-  },
-  {
-    category: "Core Configuration",
-    title: "client/src/App.tsx",
-    description: "Router setup - reads base path from config (usually don't need to change)",
-    language: "typescript",
-    code: `
-import { Router as WouterRouter } from "wouter";
-import { appConfig } from "@/config/app.config";
-import Home from "@/pages/Home";
-
-function App() {
-  return (
-    <WouterRouter base={appConfig.deployment.basePath}>
-      <Home />
-    </WouterRouter>
-  );
-}
-
-export default App;
-`,
-  },
-  {
-    category: "Core Configuration",
-    title: "client/src/config/types.ts",
-    description: "TypeScript interfaces - extend these if you need custom fields",
-    language: "typescript",
-    code: `
-export interface AppConfig {
-  site: {
-    title: string;
-    subtitle: string;
-    description: string;
-    year: number;
-  };
-  deployment: {
-    basePath: string;
-  };
-  features: {
-    search: boolean;
-    darkMode: boolean;
-    printMode: boolean;
-  };
-  theme: {
-    defaultTheme: string;
-    switchable: boolean;
-  };
-}
-
-export interface HotkeyCategory {
-  title: string;
-  icon: string;
-  shortcuts: Hotkey[];
-}
-
-export interface Hotkey {
-  key: string;
-  action: string;
-}
-
-export interface Workflow {
-  title: string;
-  description: string;
-  items: WorkflowItem[];
-}
-
-export interface WorkflowItem {
-  name: string;
-  desc: string;
-}
-
-export interface ScriptingPattern {
-  category: string;
-  title: string;
-  description: string;
-  language: string;
-  code: string;
-}
-`,
-  },
-  {
-    category: "Styling & Deployment",
-    title: "client/src/index.css",
-    description: "Change theme colors here - uses OKLCH color space",
+    category: "Styling API",
+    title: "Theme Colors (OKLCH)",
+    description: "Customize theme colors using the OKLCH color space. File: client/src/index.css",
     language: "css",
     code: `
 .dark {
+  --primary: oklch(0.7 0.2 280);          /* Purple primary color */
+  --primary-foreground: oklch(0.98 0 0);  /* Text on primary */
+  --accent: oklch(0.65 0.2 140);          /* Teal accent color */
+  --accent-foreground: oklch(0.98 0 0);   /* Text on accent */
   --background: oklch(0.15 0.02 250);     /* Dark background */
-  --foreground: oklch(0.95 0 0);          /* Text color */
-  --card: oklch(0.18 0.02 250);           /* Card background */
-  --card-foreground: oklch(0.95 0 0);     /* Card text */
-  --primary: oklch(0.6 0.2 240);          /* Primary color (blue) */
-  --primary-foreground: oklch(0.98 0 0);  /* Primary text */
-  --accent: oklch(0.55 0.18 160);         /* Accent color (green) */
-  --accent-foreground: oklch(0.98 0 0);   /* Accent text */
-  --muted: oklch(0.3 0.02 250);           /* Muted elements */
-  --muted-foreground: oklch(0.6 0.01 250); /* Muted text */
-  --border: oklch(0.25 0.02 250);         /* Border color */
+  --foreground: oklch(0.95 0.01 250);     /* Light text */
+  /* ... more colors */
 }
 
-/* Tip: Use https://oklch.com to pick colors */
+/* Tip: Use https://oklch.com to pick colors visually */
 `,
   },
+
   {
-    category: "Styling & Deployment",
-    title: ".github/workflows/deploy.yml",
-    description: "Deployment workflow - automatically deploys on push to main",
+    category: "Styling API",
+    title: "Custom CSS Classes",
+    description: "Add custom utility classes with Tailwind CSS. File: client/src/index.css",
+    language: "css",
+    code: `
+@layer components {
+  .btn-custom {
+    @apply px-4 py-2 rounded-lg bg-primary text-primary-foreground;
+    @apply hover:bg-primary/90 transition-colors;
+  }
+  
+  .card-gradient {
+    @apply bg-gradient-to-br from-primary/10 to-accent/10;
+    @apply border border-primary/20;
+  }
+}
+`,
+  },
+
+  {
+    category: "Styling API",
+    title: "Component Styling",
+    description: "Use shadcn/ui components with custom styles. Import from @/components/ui/",
+    language: "typescript",
+    code: `
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+
+export default function MyComponent() {
+  return (
+    <Card className="bg-card-gradient">
+      <CardHeader>
+        <CardTitle>Custom Styled Card</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Button className="btn-custom">Click Me</Button>
+      </CardContent>
+    </Card>
+  );
+}
+`,
+  },
+
+  // ============================================================================
+  // ROUTING API
+  // ============================================================================
+  
+  {
+    category: "Routing API",
+    title: "Add a New Page",
+    description: "Create a new page and add it to the router. Files: client/src/pages/YourPage.tsx and client/src/App.tsx",
+    language: "typescript",
+    code: `
+// 1. Create your page component
+// client/src/pages/AboutPage.tsx
+export default function AboutPage() {
+  return (
+    <div className="container py-8">
+      <h1 className="text-3xl font-bold">About Us</h1>
+      <p className="text-muted-foreground">This is the about page.</p>
+    </div>
+  );
+}
+
+// 2. Add the route in App.tsx
+// client/src/App.tsx
+import { Router as WouterRouter, Route, Switch } from "wouter";
+import AboutPage from "./pages/AboutPage";
+
+function Router() {
+  return (
+    <WouterRouter base={appConfig.deployment.basePath}>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/about" component={AboutPage} />
+      </Switch>
+    </WouterRouter>
+  );
+}
+`,
+  },
+
+  {
+    category: "Routing API",
+    title: "Navigation Links",
+    description: "Create navigation links using Wouter's Link component.",
+    language: "typescript",
+    code: `
+import { Link } from "wouter";
+
+export default function Navigation() {
+  return (
+    <nav className="flex gap-4">
+      <Link href="/">
+        <a className="text-primary hover:underline">Home</a>
+      </Link>
+      <Link href="/about">
+        <a className="text-primary hover:underline">About</a>
+      </Link>
+      <Link href="/demos/aframe">
+        <a className="text-primary hover:underline">VR Demo</a>
+      </Link>
+    </nav>
+  );
+}
+`,
+  },
+
+  {
+    category: "Routing API",
+    title: "Dynamic Routes",
+    description: "Create routes with dynamic parameters.",
+    language: "typescript",
+    code: `
+import { Route, useParams } from "wouter";
+
+// Define the page component
+function BlogPost() {
+  const { id } = useParams();
+  return <div>Blog Post ID: {id}</div>;
+}
+
+// Add the route
+<Route path="/blog/:id" component={BlogPost} />
+
+// Link to it
+<Link href="/blog/123">View Post 123</Link>
+`,
+  },
+
+  // ============================================================================
+  // DEPLOYMENT API
+  // ============================================================================
+  
+  {
+    category: "Deployment API",
+    title: "GitHub Actions Workflow",
+    description: "Customize the deployment workflow. File: .github/workflows/deploy.yml",
     language: "yaml",
     code: `
 name: Deploy to GitHub Pages
@@ -259,15 +330,6 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -275,19 +337,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
           version: 8
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-
       - name: Install dependencies
         run: pnpm install
+
+      - name: Run tests
+        run: pnpm test  # Add your test command
 
       - name: Build
         run: pnpm build
@@ -295,441 +359,269 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/public
-
-  deploy:
-    environment:
-      name: github-pages
-      url: \${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          path: './dist/public'
 `,
   },
-  // 3D/VR/AR
+
   {
-    category: "3D/VR/AR Integration",
-    title: "Adding A-Frame for VR/AR Experiences",
-    description: "Integrate A-Frame for creating WebVR/WebXR experiences",
+    category: "Deployment API",
+    title: "Build Configuration",
+    description: "Customize Vite build settings. File: vite.config.ts",
     language: "typescript",
     code: `
-// 1. Install A-Frame
-// npm install aframe
-// npm install --save-dev @types/aframe
+import { defineConfig, loadEnv } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
 
-// 2. Create a VR component: client/src/components/VRScene.tsx
-import { useEffect, useRef } from 'react';
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  
+  return {
+    plugins: [react()],
+    base: env.VITE_BASE_PATH || '/',
+    resolve: {
+      alias: {
+        "@": path.resolve(import.meta.dirname, "client", "src"),
+        "@components": path.resolve(import.meta.dirname, "client", "src", "components"),
+      },
+    },
+    build: {
+      outDir: path.resolve(import.meta.dirname, "dist/public"),
+      emptyOutDir: true,
+    },
+  };
+});
+`,
+  },
+
+  {
+    category: "Deployment API",
+    title: "Custom Domain Setup",
+    description: "Configure a custom domain for GitHub Pages. File: client/public/CNAME",
+    language: "text",
+    code: `
+yourdomain.com
+
+# Then configure DNS with your registrar:
+# - Add CNAME record pointing to <username>.github.io
+# - Or add A records pointing to GitHub Pages IPs
+# - Enable HTTPS in GitHub Pages settings
+`,
+  },
+
+  // ============================================================================
+  // ADVANCED INTEGRATIONS
+  // ============================================================================
+  
+  {
+    category: "Advanced Integrations",
+    title: "Fetch External API Data",
+    description: "Integrate with external APIs to display dynamic content.",
+    language: "typescript",
+    code: `
+import { useState, useEffect } from 'react';
+
+interface Repo {
+  id: number;
+  name: string;
+  html_url: string;
+  description: string;
+}
+
+export default function GitHubRepos({ username }: { username: string }) {
+  const [repos, setRepos] = useState<Repo[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(\`https://api.github.com/users/\${username}/repos\`)
+      .then(res => res.json())
+      .then(data => {
+        setRepos(data);
+        setLoading(false);
+      });
+  }, [username]);
+
+  if (loading) return <p>Loading...</p>;
+
+  return (
+    <div>
+      {repos.map(repo => (
+        <div key={repo.id}>
+          <a href={repo.html_url}>{repo.name}</a>
+          <p>{repo.description}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+`,
+  },
+
+  {
+    category: "Advanced Integrations",
+    title: "Create Custom Components",
+    description: "Build reusable components with TypeScript and Tailwind CSS.",
+    language: "typescript",
+    code: `
+// client/src/components/FeatureCard.tsx
+
+interface FeatureCardProps {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export default function FeatureCard({ icon, title, description }: FeatureCardProps) {
+  return (
+    <div className="p-6 bg-card border border-border rounded-lg hover:border-primary transition-colors">
+      <div className="text-4xl mb-4">{icon}</div>
+      <h3 className="text-xl font-bold mb-2">{title}</h3>
+      <p className="text-muted-foreground">{description}</p>
+    </div>
+  );
+}
+
+// Usage
+<FeatureCard 
+  icon="🚀"
+  title="Fast Deployment"
+  description="Deploy to GitHub Pages in seconds"
+/>
+`,
+  },
+
+  {
+    category: "Advanced Integrations",
+    title: "Code Splitting & Lazy Loading",
+    description: "Optimize performance with React lazy loading and Suspense.",
+    language: "typescript",
+    code: `
+import { lazy, Suspense } from 'react';
+import { Router as WouterRouter, Route, Switch } from 'wouter';
+
+// Lazy load page components
+const Home = lazy(() => import('./pages/Home'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const AFrameDemoPage = lazy(() => import('./pages/demos/AFrameDemoPage'));
+
+function Router() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <WouterRouter base={appConfig.deployment.basePath}>
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/about" component={AboutPage} />
+          <Route path="/demos/aframe" component={AFrameDemoPage} />
+        </Switch>
+      </WouterRouter>
+    </Suspense>
+  );
+}
+`,
+  },
+
+  // ============================================================================
+  // 3D/VR/AR INTEGRATION
+  // ============================================================================
+  
+  {
+    category: "3D/VR/AR Integration",
+    title: "A-Frame VR Scene",
+    description: "Create immersive VR experiences with A-Frame.",
+    language: "typescript",
+    code: `
+import { useEffect } from 'react';
 import 'aframe';
 
 export default function VRScene() {
-  const sceneRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    // A-Frame is loaded
     console.log('A-Frame version:', AFRAME.version);
   }, []);
 
   return (
-    <div ref={sceneRef}>
-      <a-scene embedded>
-        <a-sky color="#ECECEC"></a-sky>
-        <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      </a-scene>
-    </div>
-  );
-}
-
-// 3. Use in your page
-import VRScene from '@/components/VRScene';
-
-function App() {
-  return <VRScene />;
-}
-`,
-  },
-  {
-    category: "3D/VR/AR Integration",
-    title: "Adding AR.js for Augmented Reality",
-    description: "Integrate AR.js for marker-based AR experiences",
-    language: "typescript",
-    code: `
-// 1. Install AR.js and A-Frame
-// npm install aframe ar.js
-
-// 2. Create AR component: client/src/components/ARScene.tsx
-import { useEffect } from 'react';
-import 'aframe';
-import 'ar.js';
-
-export default function ARScene() {
-  useEffect(() => {
-    // AR.js is loaded
-    console.log('AR.js loaded');
-  }, []);
-
-  return (
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-      {/* Marker-based AR */}
-      <a-marker preset="hiro">
-        <a-box position="0 0.5 0" material="color: red;"></a-box>
-      </a-marker>
-      
-      <a-entity camera></a-entity>
+    <a-scene embedded>
+      <a-sky color="#ECECEC"></a-sky>
+      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
     </a-scene>
   );
 }
-
-// 3. Add to index.html for better performance
-// <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1.4.0/dist/aframe-master.min.js"></script>
-// <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 `,
   },
+
   {
     category: "3D/VR/AR Integration",
-    title: "Adding Three.js for 3D Graphics",
-    description: "Integrate Three.js with React Three Fiber",
-    language: "typescript",
+    title: "AR.js Augmented Reality",
+    description: "Add marker-based AR experiences using AR.js.",
+    language: "html",
     code: `
-// 1. Install Three.js and React Three Fiber
-// npm install three @react-three/fiber @react-three/drei
-
-// 2. Create 3D component: client/src/components/ThreeScene.tsx
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Box } from '@react-three/drei';
-
-function RotatingBox() {
-  return (
-    <Box args={[1, 1, 1]} rotation={[0, Math.PI / 4, 0]}>
-      <meshStandardMaterial color="hotpink" />
-    </Box>
-  );
-}
-
-export default function ThreeScene() {
-  return (
-    <div style={{ width: '100%', height: '600px' }}>
-      <Canvas>
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-        <RotatingBox />
-        <OrbitControls />
-      </Canvas>
-    </div>
-  );
-}
-
-// 3. Use in your page
-import ThreeScene from '@/components/ThreeScene';
+<!-- client/public/ar-demo.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+    <!-- Marker-based AR -->
+    <a-marker preset="hiro">
+      <a-box position="0 0.5 0" material="color: red;"></a-box>
+    </a-marker>
+    
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
+</html>
 `,
   },
-  // Data Visualization
+
   {
-    category: "Data Visualization",
-    title: "Adding Mapbox for Interactive Maps",
-    description: "Integrate Mapbox GL JS for interactive maps",
+    category: "3D/VR/AR Integration",
+    title: "3D Canvas Animation",
+    description: "Create 3D animations using pure Canvas API (no Three.js needed).",
     language: "typescript",
     code: `
-// 1. Install Mapbox
-// npm install mapbox-gl
-// npm install --save-dev @types/mapbox-gl
-
-// 2. Add to .env files
-// VITE_MAPBOX_TOKEN=your_mapbox_token_here
-
-// 3. Create map component: client/src/components/MapView.tsx
 import { useEffect, useRef } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
 
-mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-
-export default function MapView() {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
+export default function Canvas3D() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (map.current || !mapContainer.current) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: [-74.5, 40],
-      zoom: 9
-    });
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    // Add marker
-    new mapboxgl.Marker()
-      .setLngLat([-74.5, 40])
-      .addTo(map.current);
+    let angle = 0;
 
-    return () => {
-      map.current?.remove();
-    };
-  }, []);
-
-  return <div ref={mapContainer} style={{ width: '100%', height: '400px' }} />;
-}
-`,
-  },
-  {
-    category: "Data Visualization",
-    title: "Adding Chart.js for Data Visualization",
-    description: "Integrate Chart.js with react-chartjs-2",
-    language: "typescript",
-    code: `
-// 1. Install Chart.js
-// npm install chart.js react-chartjs-2
-
-// 2. Create chart component: client/src/components/DataChart.tsx
-import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-} from 'chart.js';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-export default function DataChart() {
-  const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    datasets: [
-      {
-        label: 'Sales 2024',
-        data: [65, 59, 80, 81, 56, 55],
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      }
-    ]
-  };
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: { position: 'top' as const },
-      title: { display: true, text: 'Monthly Sales' }
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw rotating cube (simplified 3D projection)
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const size = 100;
+      
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(angle);
+      ctx.strokeStyle = '#4CC3D9';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(-size/2, -size/2, size, size);
+      ctx.restore();
+      
+      angle += 0.02;
+      requestAnimationFrame(animate);
     }
-  };
 
-  return <Line options={options} data={data} />;
-}
-`,
-  },
-  {
-    category: "Data Visualization",
-    title: "Adding D3.js for Advanced Visualizations",
-    description: "Integrate D3.js for custom data visualizations",
-    language: "typescript",
-    code: `
-// 1. Install D3
-// npm install d3
-// npm install --save-dev @types/d3
-
-// 2. Create D3 component: client/src/components/D3Chart.tsx
-import { useEffect, useRef } from 'react';
-import * as d3 from 'd3';
-
-export default function D3Chart() {
-  const svgRef = useRef<SVGSVGElement>(null);
-
-  useEffect(() => {
-    if (!svgRef.current) return;
-
-    const data = [30, 86, 168, 281, 303, 365];
-    const width = 600;
-    const height = 400;
-    const margin = { top: 20, right: 30, bottom: 30, left: 40 };
-
-    const svg = d3.select(svgRef.current);
-    svg.selectAll('*').remove();
-
-    const x = d3.scaleBand()
-      .domain(data.map((_, i) => i.toString()))
-      .range([margin.left, width - margin.right])
-      .padding(0.1);
-
-    const y = d3.scaleLinear()
-      .domain([0, d3.max(data) || 0])
-      .range([height - margin.bottom, margin.top]);
-
-    svg.append('g')
-      .selectAll('rect')
-      .data(data)
-      .join('rect')
-      .attr('x', (_, i) => x(i.toString()) || 0)
-      .attr('y', d => y(d))
-      .attr('height', d => y(0) - y(d))
-      .attr('width', x.bandwidth())
-      .attr('fill', 'steelblue');
-
+    animate();
   }, []);
 
-  return <svg ref={svgRef} width={600} height={400} />;
-}
-`,
-  },
-  // Backend & State
-  {
-    category: "Backend & State Management",
-    title: "Adding Firebase for Backend Services",
-    description: "Integrate Firebase for authentication, database, and storage",
-    language: "typescript",
-    code: `
-// 1. Install Firebase
-// npm install firebase
-
-// 2. Create Firebase config: client/src/config/firebase.ts
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
-
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
-};
-
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
-
-// 3. Add to .env.production
-// VITE_FIREBASE_API_KEY=your_api_key
-// VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
-// VITE_FIREBASE_PROJECT_ID=your_project_id
-// VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-// VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-// VITE_FIREBASE_APP_ID=your_app_id
-`,
-  },
-  {
-    category: "Backend & State Management",
-    title: "Adding Zustand for State Management",
-    description: "Integrate Zustand for simple, scalable state management",
-    language: "typescript",
-    code: `
-// 1. Install Zustand
-// npm install zustand
-
-// 2. Create store: client/src/store/useStore.ts
-import { create } from 'zustand';
-
-interface AppState {
-  count: number;
-  user: { name: string; email: string } | null;
-  increment: () => void;
-  decrement: () => void;
-  setUser: (user: { name: string; email: string }) => void;
-  logout: () => void;
-}
-
-export const useStore = create<AppState>((set) => ({
-  count: 0,
-  user: null,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 })),
-  setUser: (user) => set({ user }),
-  logout: () => set({ user: null }),
-}));
-
-// 3. Use in component
-import { useStore } from '@/store/useStore';
-
-function Counter() {
-  const count = useStore((state) => state.count);
-  const increment = useStore((state) => state.increment);
-  const decrement = useStore((state) => state.decrement);
-
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={increment}>+</button>
-      <button onClick={decrement}>-</button>
-    </div>
-  );
-}
-`,
-  },
-  {
-    category: "Backend & State Management",
-    title: "Adding React Query for Data Fetching",
-    description: "Integrate TanStack Query (React Query) for server state management",
-    language: "typescript",
-    code: `
-// 1. Install React Query
-// npm install @tanstack/react-query
-
-// 2. Setup QueryClient: client/src/main.tsx
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
-
-root.render(
-  <QueryClientProvider client={queryClient}>
-    <App />
-  </QueryClientProvider>
-);
-
-// 3. Create a query hook: client/src/hooks/useUsers.ts
-import { useQuery } from '@tanstack/react-query';
-
-interface User {
-  id: number;
-  name: string;
-}
-
-async function fetchUsers(): Promise<User[]> {
-  const response = await fetch('https://api.example.com/users');
-  return response.json();
-}
-
-export function useUsers() {
-  return useQuery({
-    queryKey: ['users'],
-    queryFn: fetchUsers,
-  });
-}
-
-// 4. Use in component
-import { useUsers } from '@/hooks/useUsers';
-
-function UserList() {
-  const { data, isLoading, error } = useUsers();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  return (
-    <ul>
-      {data?.map(user => (
-        <li key={user.id}>{user.name}</li>
-      ))}
-    </ul>
-  );
+  return <canvas ref={canvasRef} width={800} height={600} />;
 }
 `,
   },
