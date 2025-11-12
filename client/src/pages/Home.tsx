@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,14 +14,22 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container py-6">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Sparkles className="w-8 h-8 text-primary" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Sparkles className="w-8 h-8 text-primary" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-foreground">{appConfig.site.title}</h1>
+                <p className="text-muted-foreground">{appConfig.site.subtitle}</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">{appConfig.site.title}</h1>
-              <p className="text-muted-foreground">{appConfig.site.subtitle}</p>
-            </div>
+            <Link href="/docs">
+              <Button variant="outline" className="gap-2">
+                <BookOpen className="w-4 h-4" />
+                Full Documentation
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
@@ -220,7 +227,12 @@ function DemosSection() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <a href={`${window.location.origin}${appConfig.deployment.basePath === '/' ? '' : appConfig.deployment.basePath}/ar-demo.html`} target="_blank" rel="noopener noreferrer">              <Button className="w-full gap-2">
+            <a 
+              href={`${window.location.origin}${appConfig.deployment.basePath === '/' ? '' : appConfig.deployment.basePath}/ar-demo.html`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <Button className="w-full gap-2">
                 Launch Demo
                 <ExternalLink className="w-4 h-4" />
               </Button>

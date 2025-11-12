@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import AFrameDemoPage from "./pages/demos/AFrameDemoPage";
 import ARDemoPage from "./pages/demos/ARDemoPage";
 import ThreeDemoPage from "./pages/demos/ThreeDemoPage";
+import DocsPage from "./pages/DocsPage";
 import { appConfig } from "@/config/app.config";
 
 function Router() {
@@ -18,6 +19,7 @@ function Router() {
         <Route path={"/demos/aframe"} component={AFrameDemoPage} />
         <Route path={"/demos/ar"} component={ARDemoPage} />
         <Route path={"/demos/3d"} component={ThreeDemoPage} />
+        <Route path={"/docs"} component={DocsPage} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
