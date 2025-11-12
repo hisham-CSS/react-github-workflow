@@ -21,8 +21,8 @@ export default function DocsPage() {
                 <p className="text-muted-foreground">Comprehensive guides and API reference</p>
               </div>
             </div>
-            <Link href="/">
-              <a className="text-primary hover:underline">← Back to Home</a>
+            <Link href="/" className="text-primary hover:underline">
+              ← Back to Home
             </Link>
           </div>
         </div>
@@ -30,30 +30,36 @@ export default function DocsPage() {
 
       <main className="container py-8">
         <Tabs defaultValue="getting-started" className="w-full">
-          <TabsList className="grid w-full grid-cols-6 mb-8">
-            <TabsTrigger value="getting-started">
-              <Sparkles className="w-4 h-4 mr-2" />
-              Getting Started
+          <TabsList className="flex lg:grid w-full lg:grid-cols-6 mb-8 overflow-x-auto gap-2">
+            <TabsTrigger value="getting-started" className="flex items-center gap-2 flex-shrink-0">
+              <Sparkles className="w-5 h-5" />
+              <span className="hidden lg:inline">Getting Started</span>
+              <span className="lg:hidden text-xs">Start</span>
             </TabsTrigger>
-            <TabsTrigger value="configuration">
-              <Code2 className="w-4 h-4 mr-2" />
-              Configuration
+            <TabsTrigger value="configuration" className="flex items-center gap-2 flex-shrink-0">
+              <Code2 className="w-5 h-5" />
+              <span className="hidden lg:inline">Configuration</span>
+              <span className="lg:hidden text-xs">Config</span>
             </TabsTrigger>
-            <TabsTrigger value="styling">
-              <Palette className="w-4 h-4 mr-2" />
-              Styling
+            <TabsTrigger value="styling" className="flex items-center gap-2 flex-shrink-0">
+              <Palette className="w-5 h-5" />
+              <span className="hidden lg:inline">Styling</span>
+              <span className="lg:hidden text-xs">Style</span>
             </TabsTrigger>
-            <TabsTrigger value="routing">
-              <RouteIcon className="w-4 h-4 mr-2" />
-              Routing
+            <TabsTrigger value="routing" className="flex items-center gap-2 flex-shrink-0">
+              <RouteIcon className="w-5 h-5" />
+              <span className="hidden lg:inline">Routing</span>
+              <span className="lg:hidden text-xs">Route</span>
             </TabsTrigger>
-            <TabsTrigger value="deployment">
-              <Rocket className="w-4 h-4 mr-2" />
-              Deployment
+            <TabsTrigger value="deployment" className="flex items-center gap-2 flex-shrink-0">
+              <Rocket className="w-5 h-5" />
+              <span className="hidden lg:inline">Deployment</span>
+              <span className="lg:hidden text-xs">Deploy</span>
             </TabsTrigger>
-            <TabsTrigger value="advanced">
-              <Cpu className="w-4 h-4 mr-2" />
-              Advanced
+            <TabsTrigger value="advanced" className="flex items-center gap-2 flex-shrink-0">
+              <Cpu className="w-5 h-5" />
+              <span className="hidden lg:inline">Advanced</span>
+              <span className="lg:hidden text-xs">Adv</span>
             </TabsTrigger>
           </TabsList>
 
